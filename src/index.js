@@ -118,7 +118,11 @@ class Game extends React.Component {
         if (winner) {
             status = 'Winner: ' + winner;
         } else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+            if (current.squares.length === current.squares.filter(String).length) {
+                status = 'Draw!';
+            } else {
+                status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+            }
         }
 
         const sortLabel = this.state.ascending ? 'Ascending' : 'Descending'
