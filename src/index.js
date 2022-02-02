@@ -18,26 +18,28 @@ class Board extends React.Component {
         );
     }
 
+    /*
+    The three dots in JavaScript are the spread / rest operator.
+    The spread syntax allows an expression to be expanded in places where multiple arguments are expected.
+        myFunction(...iterableObj);
+        [...iterableObj, 4, 5, 6]
+        [...Array(10)]
+     */
     render() {
+        const rowCount = 3, colCount = 3;
         return (
             <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
+                {[...new Array(rowCount)].map((x, rowIndex) => {
+                        return (
+                            <div className="board-row">
+                                {[...new Array(colCount)].map((y, colIndex) =>
+                                    this.renderSquare(rowIndex*colCount + colIndex) )}
+                            </div>
+                        )
+                    })
+                }
             </div>
-        );
+        )
     }
 }
 
