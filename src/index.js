@@ -53,6 +53,7 @@ class Game extends React.Component {
             }],
             stepNumber: 0,
             xIsNext: true,
+            ascending: true,
         };
     }
 
@@ -90,7 +91,7 @@ class Game extends React.Component {
             const row = Math.floor(step.coordinate / 3) % 3 + 1;
             const col = step.coordinate % 3 + 1;
             const desc = move ?
-                `Go to move # ${move} (${row}, ${col})` :
+                `Go to move # ${move+1} (${row}, ${col})` :
                 'Go to game start';
             let btnStyle = {fontWeight: "normal"};
             if (move === this.state.stepNumber) {
@@ -108,13 +109,22 @@ class Game extends React.Component {
             );
         });
 
-
         let status;
         if (winner) {
             status = 'Winner: ' + winner;
         } else {
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
+
+        const sortLabel = this.state.ascending ? 'Ascending' : 'Descending'
+        const sortOrder =
+        <button
+            onClick={() => this.setState({
+                ascending: !this.state.ascending,
+            })}
+        >{sortLabel}</button>
+
+        const sortedMoves = this.state.ascending ? moves : moves.reverse();
 
         return (
             <div className="game">
@@ -126,7 +136,8 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    {sortOrder}
+                    <ol reversed={!this.state.ascending}>{sortedMoves}</ol>
                 </div>
             </div>
         );
